@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>Invoice generator</title>
+        <style>
+            html, body {
+                height: 100%;
+                margin: 0;
+                box-sizing: border-box;
+            }
+            body, input, textarea {
+                font-size: 16px;
+                font-family: sans-serif;
+            }
+            body {
+                display: flex;
+                flex-flow: column;
+                padding: 50px 80px 50px 80px;
+                -webkit-print-color-adjust: exact;
+            }
+            @font-face {
+                font-family: 'wiffles';
+                src: url('wiffles-webfont.woff') format('woff');
+                font-weight: normal;
+                font-style: normal;
+            }
+            @page {
+                size: A4;
+            }
+
+            .logo {
+                font-family: wiffles;
+                font-size: 65px;
+                display: block;
+                flex: 0 1 auto;
+                margin-bottom: 80px;
+                color: #FF802A;
+            }
+            .b {
+                color: #CF5300;
+            }
+            .l {
+                color: #E35B00;
+            }
+            .u {
+                color: #FF9900;
+            }
+            .m {
+                color: #E35B00;
+            }
+            .e {
+                color: #CF5300;
+            }
+            .wiffles {
+                font-family: wiffles;
+                color: #FF6600;
+            }
+
+            textarea {
+                display: block;
+                width: 50%;
+            }
+            input {
+                width: 150px;
+            }
+
+            .orderdate {
+                flex: 0 1 auto;
+                margin-bottom: 30px;
+                font-size: 25px;
+            }
+            .orderdate div {
+                display: inline-block;
+            }
+            .date {
+                float: right;
+            }
+
+            .content {
+                display: flex;
+                flex: 1 1 auto;
+                align-items: center;
+                justify-content: center;
+            }
+            .price {
+                width: 120px;
+                text-align: right;
+            }
+
+            footer {
+                flex: 0 1 auto;
+                font-size: 25px;
+            }
+            footer > span {
+                display: block;
+            }
+            footer .right {
+                float: right;
+            }
+            footer .iban {
+                margin-top: 8px;
+                font-family: sans;
+                font-size: 14px;
+                color: #444;
+            }
+
+            input, textarea {
+                resize: none !important;
+            }
+            @media print {
+                input, textarea {
+                    border: none;
+                }
+                label {
+                    display: none;
+                }
+            }
+        </style>
+    </head>
+    <body>
+
+        <span class="logo">Ahorn<span class="b">b</span><span class="l">l</span><span class="u">u</span><span class="m">m</span><span class="e">e</span></span>
+        <div class="orderdate">
+        <div class="order">
+            <span class="wiffles">RECHNUNG</span>
+            <input type="text"/>
+        </div>
+        <div class="date">
+            <span class="wiffles">DATUM</span>
+            <input type="text"/>
+        </div>
+        </div>
+        <div class="address">
+            <label>Adresse:</label>
+            <textarea></textarea>
+        </div>
+        <div class="content">
+            <textarea></textarea>
+            <textarea class="price"></textarea>
+        </div>
+
+
+
+        <footer class="wiffles">
+            <span>Danke fuer Ihre Bestellung<span class="right">www.ahornblume.ch</span></span>
+            <span><span class="iban">IBAN: CH71 0900 0000 6037 2551 0</span><span class="right">Wiesenstrasse 67, 3014 Bern</span></span>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/jquery.autosize/3.0.20/autosize.min.js"></script>
+        <script
+              src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
+              integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc="
+              crossorigin="anonymous"></script>
+              <script> autosize(document.querySelectorAll('textarea')); </script>
+    </body>
+</html>
