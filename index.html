@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width" />
         <title>Invoice generator</title>
         <style>
-            html, body {
+            html, body, .main {
                 height: 29cm;
                 margin: 0;
                 box-sizing: border-box;
@@ -15,11 +15,13 @@
                 font-family: sans-serif;
             }
             body {
+            }
+            .main {
                 display: flex;
                 flex-flow: column;
-                padding: 30px;
                 max-width: 800px;
                 margin: auto;
+                padding: 30px;
                 -webkit-print-color-adjust: exact;
             }
             @font-face {
@@ -37,30 +39,38 @@
                 font-size: 65px;
                 display: block;
                 flex: 0 1 auto;
+            }
+            .logo.maplesplendor {
+                margin-bottom: 40px;
+                text-align: center;
+            }
+            .logo.ahornblume {
                 margin-bottom: 80px;
                 color: #FF802A;
             }
-            .b {
+            .logo.ahornblume .b {
                 color: #CF5300;
             }
-            .l {
+            .logo.ahornblume .l {
                 color: #E35B00;
             }
-            .u {
+            .logo.ahornblume .u {
                 color: #FF9900;
             }
-            .m {
+            .logo.ahornblume .m {
                 color: #E35B00;
             }
-            .e {
+            .logo.ahornblume .e {
                 color: #CF5300;
             }
             .wiffles {
                 font-family: wiffles;
+            }
+            .ahornblume .wiffles, .ahornblume.wiffles {
                 color: #FF6600;
             }
 
-            input {
+            .orderdate input {
                 width: 150px;
             }
 
@@ -93,10 +103,19 @@
 
             footer {
                 flex: 0 1 auto;
+            }
+            footer.ahornblume {
                 font-size: 25px;
+            }
+            footer.maplesplendor {
+                font-size: 20px;
+            }
+            footer.maplesplendor .url {
+                font-size: 24px;
             }
             footer > span {
                 display: block;
+                margin-top: 10px;
             }
             footer .right {
                 float: right;
@@ -112,12 +131,28 @@
                 resize: none !important;
                 border: 1px solid gray;
             }
+
+            input#ahornblume:checked ~ div .ahornblume {
+                display: block;
+            }
+            input#ahornblume:checked ~ div .maplesplendor {
+                display: none;
+            }
+            input#maplesplendor:checked ~ div .maplesplendor {
+                display: block;
+            }
+            input#maplesplendor:checked ~ div .ahornblume {
+                display: none;
+            }
+            input[type="radio"] {
+                margin: 30px 10px 0 50px;
+            }
             @media print {
-                html,body {
+                html,body,.main {
                     height: 100%;
                 }
-                body {
-                    padding: 50px 80px 50px 80px;
+                .main {
+                    padding: 50px 80px 0 80px;
                     max-width: none;
                 }
                 .content textarea {
@@ -128,40 +163,62 @@
                     outline: none;
                     border: none;
                 }
-                label {
+                label, input[type="radio"] {
                     display: none;
                 }
             }
         </style>
     </head>
     <body>
+        <input checked type="radio" id="ahornblume" name="group"><label for="ahornblume">Ahornblume</label>
+        <input type="radio" id="maplesplendor" name="group"><label for="maplesplendor">Maplesplendor</label>
 
-        <span class="logo">Ahorn<span class="b">b</span><span class="l">l</span><span class="u">u</span><span class="m">m</span><span class="e">e</span></span>
-        <div class="orderdate">
-        <div class="order">
-            <span class="wiffles">RECHNUNG</span>
-            <input type="text"/>
-        </div>
-        <div class="date">
-            <span class="wiffles">DATUM</span>
-            <input type="text"/>
-        </div>
-        </div>
-        <div class="address">
-            <label>Adresse:</label>
-            <textarea></textarea>
-        </div>
-        <div class="expand content">
-            <textarea class="expand"></textarea>
-            <textarea class="price"></textarea>
-        </div>
+        <div class="main">
+            <span class="logo ahornblume">Ahorn<span class="b">b</span><span class="l">l</span><span class="u">u</span><span class="m">m</span><span class="e">e</span></span>
+            <span class="logo maplesplendor"><img src="https://maplesplendor.ca/images/logo.svg" alt="Maplesplendor" width="100" height="100"></span>
+            <div class="orderdate ahornblume">
+                <div class="order">
+                    <span class="wiffles">RECHNUNG</span>
+                    <input type="text"/>
+                </div>
+                <div class="date">
+                    <span class="wiffles">DATUM</span>
+                    <input type="text"/>
+                </div>
+            </div>
+            <div class="orderdate maplesplendor">
+                <div class="order">
+                    <span class="wiffles">INVOICE</span>
+                    <input type="text"/>
+                </div>
+                <div class="date">
+                    <span class="wiffles">Date</span>
+                    <input type="text"/>
+                </div>
+            </div>
 
 
 
-        <footer class="wiffles">
-            <span>Danke fuer Ihre Bestellung<span class="right">www.ahornblume.ch</span></span>
-            <span><span class="iban">IBAN: CH71 0900 0000 6037 2551 0</span><span class="right">Wiesenstrasse 67, 3014 Bern</span></span>
-        </footer>
+            <div class="address">
+                <label>Adresse:</label>
+                <textarea></textarea>
+            </div>
+            <div class="expand content">
+                <textarea class="expand"></textarea>
+                <textarea class="price"></textarea>
+            </div>
+
+
+
+            <footer class="wiffles ahornblume">
+                <span>Danke fuer Ihre Bestellung<span class="right">www.ahornblume.ch</span></span>
+                <span><span class="iban">IBAN: CH71 0900 0000 6037 2551 0</span><span class="right">Wiesenstrasse 67, 3014 Bern</span></span>
+            </footer>
+            <footer class="wiffles maplesplendor">
+                <span>&nbsp;by credit card,<span class="right url">www.maplesplendor.ca</span></span>
+                <span>Thank you for your business<span class="right">Wiesenstrasse 67, &nbsp;CH - 3014 Berne</span></span>
+            </footer>
+        </div>
 
         <script src="https://cdn.jsdelivr.net/jquery.autosize/3.0.20/autosize.min.js"></script>
         <script> autosize(document.querySelectorAll('textarea')); </script>
