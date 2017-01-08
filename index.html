@@ -14,11 +14,9 @@
                 font-size: 16px;
                 font-family: sans-serif;
             }
-            body {
-            }
             .main {
                 display: flex;
-                flex-flow: column;
+                flex-direction: column;
                 max-width: 800px;
                 margin: auto;
                 padding: 30px;
@@ -82,6 +80,10 @@
             .orderdate div {
                 display: inline-block;
             }
+			.orderdate span {
+				float: left;
+				margin-right: 10px;
+			}
             .date {
                 float: right;
             }
@@ -145,10 +147,13 @@
                 display: none;
             }
             input[type="radio"] {
-                margin: 30px 10px 0 50px;
+                margin: 30px 10px 0 40px;
             }
+			input[type="reset"] {
+				margin-left: 30px;
+			}
             @media print {
-                html,body,.main {
+                html,body,form,.main {
                     height: 100%;
                 }
                 .main {
@@ -163,52 +168,42 @@
                     outline: none;
                     border: none;
                 }
-                label, input[type="radio"] {
+                label, input[type="radio"], input[type="reset"] {
                     display: none;
                 }
             }
         </style>
     </head>
     <body>
-        <input checked type="radio" id="ahornblume" name="group"><label for="ahornblume">Ahornblume</label>
-        <input type="radio" id="maplesplendor" name="group"><label for="maplesplendor">Maplesplendor</label>
+        <form data-persist="garlic">
+        <input checked type="radio" id="ahornblume" name="group" value="ah"><label for="ahornblume">Ahornblume</label>
+        <input type="radio" id="maplesplendor" name="group" value="ms"><label for="maplesplendor">Maplesplendor</label>
+		<input type="reset">
 
         <div class="main">
             <span class="logo ahornblume">Ahorn<span class="b">b</span><span class="l">l</span><span class="u">u</span><span class="m">m</span><span class="e">e</span></span>
             <span class="logo maplesplendor"><img src="https://maplesplendor.ca/images/logo.svg" alt="Maplesplendor" width="100" height="100"></span>
-            <div class="orderdate ahornblume">
+            <div class="orderdate">
                 <div class="order">
-                    <span class="wiffles">RECHNUNG</span>
-                    <input type="text"/>
+                    <span class="wiffles ahornblume">RECHNUNG</span>
+                    <span class="wiffles maplesplendor">INVOICE</span>
+                    <input type="text" name="invoice" />
                 </div>
                 <div class="date">
-                    <span class="wiffles">DATUM</span>
-                    <input type="text"/>
+                    <span class="wiffles ahornblume">DATUM</span>
+                    <span class="wiffles maplesplendor">Date</span>
+                    <input type="text" name="date" />
                 </div>
             </div>
-            <div class="orderdate maplesplendor">
-                <div class="order">
-                    <span class="wiffles">INVOICE</span>
-                    <input type="text"/>
-                </div>
-                <div class="date">
-                    <span class="wiffles">Date</span>
-                    <input type="text"/>
-                </div>
-            </div>
-
-
 
             <div class="address">
                 <label>Adresse:</label>
                 <textarea></textarea>
             </div>
             <div class="expand content">
-                <textarea class="expand"></textarea>
-                <textarea class="price"></textarea>
+                <textarea class="expand" name="content"></textarea>
+                <textarea class="price" name="price"></textarea>
             </div>
-
-
 
             <footer class="wiffles ahornblume">
                 <span>Danke fuer Ihre Bestellung<span class="right">www.ahornblume.ch</span></span>
@@ -219,8 +214,10 @@
                 <span>Thank you for your business<span class="right">Wiesenstrasse 67, &nbsp;CH - 3014 Berne</span></span>
             </footer>
         </div>
-
+		</form>
+        <script src="https://code.jquery.com/jquery-1.8.2.min.js"></script>
         <script src="https://cdn.jsdelivr.net/jquery.autosize/3.0.20/autosize.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/garlic.js/1.2.4/garlic.min.js"></script>
         <script> autosize(document.querySelectorAll('textarea')); </script>
     </body>
 </html>
