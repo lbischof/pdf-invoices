@@ -6,22 +6,20 @@
         <meta name="robots" content="noindex">
         <title>Invoice generator</title>
         <style>
-            html, body, .main {
-                height: 29cm;
-                margin: 0;
+            body {
+                -webkit-print-color-adjust: exact;
                 box-sizing: border-box;
-            }
-            body, input, textarea {
+                height: 29.7cm;
                 font-size: 16px;
                 font-family: sans-serif;
+                margin: 0;
             }
-            .main {
-                display: flex;
-                flex-direction: column;
-                max-width: 800px;
-                margin: auto;
-                padding: 30px;
-                -webkit-print-color-adjust: exact;
+            *, *:before, *:after {
+                box-sizing: inherit;
+                font: inherit;
+            }
+            form, .main {
+                height: 100%;
             }
             @font-face {
                 font-family: 'wiffles';
@@ -33,18 +31,24 @@
                 size: A4;
             }
 
+            .main {
+                display: flex;
+                flex-direction: column;
+                max-width: 21cm;
+                margin: auto;
+                padding: 30px;
+            }
+
             .logo {
-                font-family: wiffles;
-                font-size: 65px;
+                margin-bottom: 80px;
                 display: block;
-                flex: 0 1 auto;
             }
             .logo.maplesplendor {
-                margin-bottom: 40px;
                 text-align: center;
             }
             .logo.ahornblume {
-                margin-bottom: 80px;
+                font-family: wiffles;
+                font-size: 65px;
                 color: #FF802A;
             }
             .logo.ahornblume .b {
@@ -62,10 +66,12 @@
             .logo.ahornblume .e {
                 color: #CF5300;
             }
+
             .wiffles {
                 font-family: wiffles;
+                font-size: 25px;
             }
-            .ahornblume .wiffles, .ahornblume.wiffles {
+            .ahornblume.wiffles {
                 color: #FF6600;
             }
 
@@ -74,22 +80,15 @@
             }
 
             .orderdate {
-                flex: 0 1 auto;
+                display: flex;
+                justify-content: space-between;
                 margin-bottom: 30px;
-                font-size: 25px;
-            }
-            .orderdate div {
-                display: inline-block;
             }
 			.orderdate span {
-				float: left;
 				margin-right: 10px;
 			}
-            .date {
-                float: right;
-            }
             .expand {
-                flex: 1 1 auto;
+                flex-grow: 1;
             }
             .address textarea {
                 width: 100%;
@@ -104,12 +103,6 @@
                 text-align: right;
             }
 
-            footer {
-                flex: 0 1 auto;
-            }
-            footer.ahornblume {
-                font-size: 25px;
-            }
             footer.maplesplendor {
                 font-size: 20px;
             }
@@ -125,7 +118,7 @@
             }
             footer .iban {
                 margin-top: 8px;
-                font-family: sans;
+                font-family: sans-serif;
                 font-size: 14px;
                 color: #444;
             }
@@ -136,13 +129,13 @@
             }
 
             input#ahornblume:checked ~ div .ahornblume {
-                display: block;
+                display: unset;
             }
             input#ahornblume:checked ~ div .maplesplendor {
                 display: none;
             }
             input#maplesplendor:checked ~ div .maplesplendor {
-                display: block;
+                display: unset;
             }
             input#maplesplendor:checked ~ div .ahornblume {
                 display: none;
@@ -154,7 +147,7 @@
 				margin-left: 30px;
 			}
             @media print {
-                html,body,form,.main {
+                html,body {
                     height: 100%;
                 }
                 .main {
@@ -219,6 +212,10 @@
         <script src="https://code.jquery.com/jquery-1.8.2.min.js"></script>
         <script src="https://cdn.jsdelivr.net/jquery.autosize/3.0.20/autosize.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/garlic.js/1.2.4/garlic.min.js"></script>
-        <script> autosize(document.querySelectorAll('textarea')); </script>
+        <script>
+            var ta = $('textarea');
+            autosize(ta);
+            ta.garlic({ onRetrieve: function() { autosize.update(ta) }})
+        </script>
     </body>
 </html>
