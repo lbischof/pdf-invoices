@@ -237,6 +237,7 @@
             }
             $('#print').on('click', function() {
               var lang = $('input[name=lang]:checked').val()
+              var mdate = moment($('.date > input').val()).locale(lang);
               var content = $('.content textarea').map(function() {
                 return $(this).val();
               }).get().join();
@@ -244,8 +245,9 @@
               if (re.test(content)) {
                 alert("Found wrong language: "+badwords[lang])
               }
-              var prettydate = moment($('.date > input').val()).locale(lang).format('LL')
-              $('.date > .print').text(prettydate)
+              $('.date > .print').text(mdate.format('LL'))
+              var name = $('.address textarea').val().split('\n')[0].replace(/\s/g, '')
+              document.title = name + mdate.format('YYMM')
               window.print()
             });
             var ta = $('textarea');
