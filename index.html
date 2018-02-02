@@ -38,32 +38,35 @@
                 margin: auto;
                 padding: 30px;
             }
+            .print {
+              display: none;
+            }
 
             .logo {
                 margin-bottom: 80px;
                 display: block;
             }
-            .logo.maplesplendor {
+            .logo.ms {
                 text-align: center;
             }
-            .logo.ahornblume {
+            .logo.ah {
                 font-family: wiffles;
                 font-size: 65px;
                 color: #FF802A;
             }
-            .logo.ahornblume .b {
+            .logo.ah .b {
                 color: #CF5300;
             }
-            .logo.ahornblume .l {
+            .logo.ah .l {
                 color: #E35B00;
             }
-            .logo.ahornblume .u {
+            .logo.ah .u {
                 color: #FF9900;
             }
-            .logo.ahornblume .m {
+            .logo.ah .m {
                 color: #E35B00;
             }
-            .logo.ahornblume .e {
+            .logo.ah .e {
                 color: #CF5300;
             }
 
@@ -71,7 +74,7 @@
                 font-family: wiffles;
                 font-size: 25px;
             }
-            .ahornblume.wiffles {
+            .ah.wiffles {
                 color: #FF6600;
             }
 
@@ -103,10 +106,10 @@
                 text-align: right;
             }
 
-            footer.maplesplendor {
+            footer.ms {
                 font-size: 20px;
             }
-            footer.maplesplendor .url {
+            footer.ms .url {
                 font-size: 24px;
             }
             footer > span {
@@ -128,16 +131,16 @@
                 border: 1px solid gray;
             }
 
-            input#ahornblume:checked ~ div .ahornblume {
+            input#ah:checked ~ div .ah {
                 display: unset;
             }
-            input#ahornblume:checked ~ div .maplesplendor {
+            input#ah:checked ~ div .ms {
                 display: none;
             }
-            input#maplesplendor:checked ~ div .maplesplendor {
+            input#ms:checked ~ div .ms {
                 display: unset;
             }
-            input#maplesplendor:checked ~ div .ahornblume {
+            input#ms:checked ~ div .ah {
                 display: none;
             }
             input[type="radio"] {
@@ -168,29 +171,33 @@
                 input[type="text"] {
                     display: unset;
                 }
+                .print {
+                  display: unset;
+                }
             }
         </style>
     </head>
     <body>
         <form data-persist="garlic">
-        <input checked type="radio" id="ahornblume" name="group" value="ah"><label for="ahornblume">Ahornblume</label>
-        <input type="radio" id="maplesplendor" name="group" value="ms"><label for="maplesplendor">Maplesplendor</label>
+        <input checked type="radio" id="ah" name="lang" value="de"><label for="ah">Ahornblume</label>
+        <input type="radio" id="ms" name="lang" value="en"><label for="ms">Maplesplendor</label>
 		<input type="reset">
-		<input type="button" value="Print" onclick="window.print()">
+		<input id="print" type="button" value="Print">
 
         <div class="main">
-            <span class="logo ahornblume">Ahorn<span class="b">b</span><span class="l">l</span><span class="u">u</span><span class="m">m</span><span class="e">e</span></span>
-            <span class="logo maplesplendor"><img src="logo.svg" alt="Maplesplendor" width="100" height="100"></span>
+            <span class="logo ah">Ahorn<span class="b">b</span><span class="l">l</span><span class="u">u</span><span class="m">m</span><span class="e">e</span></span>
+            <span class="logo ms"><img src="logo.svg" alt="ms" width="100" height="100"></span>
             <div class="orderdate">
                 <div class="order">
-                    <span class="wiffles ahornblume">RECHNUNG</span>
-                    <span class="wiffles maplesplendor">INVOICE</span>
+                    <span class="wiffles ah">RECHNUNG</span>
+                    <span class="wiffles ms">INVOICE</span>
                     <input type="text" name="invoice" />
                 </div>
                 <div class="date">
-                    <span class="wiffles ahornblume">DATUM</span>
-                    <span class="wiffles maplesplendor">Date</span>
-                    <input type="text" name="date" />
+                    <span class="wiffles ah">DATUM</span>
+                    <span class="wiffles ms">Date</span>
+                    <input type="date" name="date" />
+                    <span class="print"></span>
                 </div>
             </div>
 
@@ -203,11 +210,11 @@
                 <textarea class="price" name="price"></textarea>
             </div>
 
-            <footer class="wiffles ahornblume">
+            <footer class="wiffles ah">
                 <span>Danke fuer Ihre Bestellung<span class="right">www.ahornblume.ch</span></span>
                 <span><span class="iban">IBAN: CH71 0900 0000 6037 2551 0</span><span class="right">Wiesenstrasse 67, 3014 Bern</span></span>
             </footer>
-            <footer class="wiffles maplesplendor">
+            <footer class="wiffles ms">
                 <span>&nbsp;by credit card,<span class="right url">www.maplesplendor.ca</span></span>
                 <span>Thank you for your business<span class="right">Wiesenstrasse 67, &nbsp;CH - 3014 Berne</span></span>
             </footer>
@@ -216,7 +223,26 @@
         <script src="https://code.jquery.com/jquery-1.8.2.min.js"></script>
         <script src="https://cdn.jsdelivr.net/jquery.autosize/3.0.20/autosize.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/garlic.js/1.2.4/garlic.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/locale/de-ch.js"></script>
         <script>
+            var badwords = {
+                'de': 'shipping|cad',
+                'en': 'versand|chf'
+            }
+            $('#print').on('click', function() {
+              var lang = $('input[name=lang]:checked').val()
+              var content = $('.content textarea').map(function() {
+                return $(this).val();
+              }).get().join();
+              var re = new RegExp(badwords[lang], 'i');
+              if (re.test(content)) {
+                alert("Found wrong language: "+badwords[lang])
+              }
+              var prettydate = moment($('.date > input').val()).locale(lang).format('LL')
+              $('.date > .print').text(prettydate)
+              window.print()
+            });
             var ta = $('textarea');
             autosize(ta);
             ta.garlic({ onRetrieve: function() { autosize.update(ta) }})
